@@ -13,4 +13,4 @@ docker run -p 80:80 -p 443:443 \
   -v $PKI_DIR:/etc/nginx/pki:rw \
   -v $AUTH_DIR:/etc/nginx/auth:ro \
   --name nginx_mobsf \
-  pengzhendong/rp4mobsf:latest
+  rp4mobsf:latest
