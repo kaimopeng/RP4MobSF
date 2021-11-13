@@ -1,10 +1,7 @@
-#FROM nginx
 FROM debian:jessie
 LABEL maintainer="superpoussin22"
 
-ENV LANG C.UTF-8 \
-ENV FORWARD_PORT=80
-ENV FORWARD_HOST=web
+ENV LANG C.UTF-8
 
 RUN apt-get update; apt-get install -y \
     openssl nginx nginx-extras gettext
@@ -19,18 +16,9 @@ RUN sed -i 's/access_log.*/access_log \/dev\/stdout;/g' /etc/nginx/nginx.conf; \
     sed -i 's/ssl_protocols/#ssl_protocols/' /etc/nginx/nginx.conf; \
     sed -i 's/ssl_prefer_server_ciphers on;/#ssl_prefer_server_ciphers on;/' /etc/nginx/nginx.conf
 
-
-#ADD ./conf/basic.conf /etc/nginx/conf.d/basic.conf
-#ADD ./conf/ssl.conf /etc/nginx/conf.d/ssl.conf
-#ADD ./auth.htpasswd /etc/nginx/auth.htpasswd
-#ADD ./conf/auth.conf /opt/auth.conf
-
 ADD entrypoint.sh /opt/entrypoint.sh
 RUN chmod a+x /opt/entrypoint.sh
-
-#create cache directory
 RUN mkdir -p /data/nginx/cache
-
 RUN rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/opt/entrypoint.sh"]

@@ -19,10 +19,9 @@ EOF
 
 if [ -z ${DH_SIZE+x} ]
 then
-  >&2 echo ">> no \$DH_SIZE specified using default" 
+  >&2 echo ">> no \$DH_SIZE specified using default"
   DH_SIZE="2048"
 fi
-
 
 DH="/etc/nginx/pki/dh.pem"
 
@@ -46,16 +45,7 @@ then
   -days 3650 -nodes -sha256
 fi
 
-envsubst < /etc/nginx/conf.d/auth.conf > /etc/nginx/conf.d/auth2.conf
-rm -f /etc/nginx/conf.d/auth.conf
-mv /etc/nginx/conf.d/auth2.conf /etc/nginx/conf.d/auth.conf
-#cp /etc/nginx/external/auth.htpasswd /etc/nginx/auth.htpasswd
-
 # exec CMD
 echo ">> exec docker CMD"
 echo "$@"
 exec "$@"
-#envsubst < auth.conf > /etc/nginx/conf.d/auth.conf
-#envsubst < auth.htpasswd > /etc/nginx/auth.htpasswd
-
-
